@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Client{% endblock %}
+
+{% block body %}
+<style>
+    
+</style>
+
+{{ form_start(clientForm) }}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        {% for error in app.flashes('error') %}
+            <div class="col-12 col-sm-10 col-md-8 my-2 alert alert-danger">
+                {{ error }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('notice') %}
+            <div class="col-12 col-sm-10 col-md-8 my-2 alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="col-12 text-center">
+            <h1 class="my-3">Ajouter un Client</h1>
+        </div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+            <div class="mb-2">
+                {{ form_row(clientForm.CompanyName) }}
+                {% if form_errors(clientForm.CompanyName) %}
+                    <span class="labelError">Veuillez saisir un nom valide (2-50 caractères)</span>
+                {% endif %}
+            </div>
+            <div class="mb-2">
+                {{ form_row(clientForm.ContactName) }}
+                {% if form_errors(clientForm.ContactName) %}
+                    <span class="labelError">Veuillez saisir un nom valide (2-50 caractères)</span>
+                {% endif %}
+            </div>
+            <div class="mb-2">
+                {{ form_row(clientForm.ContactEmail) }}
+                {% if form_errors(clientForm.ContactEmail) %}
+                    <span class="labelError">Veuillez saisir une adresse mail valide</span>
+                {% endif %}
+            </div>
+            <div class="mb-2">
+                {{ form_row(clientForm.ContactPhone) }}
+                {% if form_errors(clientForm.ContactPhone) %}
+                    <span class="labelError">Veuillez saisir un numéro de téléphone valide</span>
+                {% endif %}
+            </div>
+            <div class="mb-2 mt-2 text-center">
+                {{ form_row(clientForm.submit) }}
+            </div>
+            <div class="mb-2 mt-1 text-center">
+                <span class="labelError">* Champs obligatoires</span>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(clientForm) }}
+{% endblock %}

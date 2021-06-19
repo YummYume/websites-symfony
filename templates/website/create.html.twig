@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Site{% endblock %}
+
+{% block body %}
+<style>
+    
+</style>
+
+{{ form_start(websiteForm) }}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        {% for error in app.flashes('error') %}
+            <div class="col-12 col-sm-10 col-md-8 my-2 alert alert-danger">
+                {{ error }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('notice') %}
+            <div class="col-12 col-sm-10 col-md-8 my-2 alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="col-12 text-center">
+            <h1 class="my-3">Ajouter un Site</h1>
+        </div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+            <div class="mb-2">
+                {{ form_row(websiteForm.Name) }}
+                {% if form_errors(websiteForm.Name) %}
+                    <span class="labelError">Veuillez saisir un nom valide (2-50 caractères)</span>
+                {% endif %}
+            </div>
+            <div class="mb-2">
+                {{ form_row(websiteForm.Link) }}
+                {% if form_errors(websiteForm.Link) %}
+                    <span class="labelError">Veuillez saisir un lien valide</span>
+                {% endif %}
+            </div>
+            <div class="mb-2">
+                {{ form_row(websiteForm.Client) }}
+                {% if form_errors(websiteForm.Client) %}
+                    <span class="labelError">Veuillez sélectionner un client</span>
+                {% endif %}
+            </div>
+            <div class="mb-2">
+                {{ form_row(websiteForm.PHP) }}
+            </div>
+            <div class="mb-2 mt-2 text-center">
+                {{ form_row(websiteForm.submit) }}
+            </div>
+            <div class="mb-2 mt-1 text-center">
+                <span class="labelError">* Champs obligatoires</span>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(websiteForm) }}
+{% endblock %}

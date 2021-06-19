@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sites Web{% endblock %}
+
+{% block body %}
+{% if easterEgg %}
+    <style>
+        @keyframes roll {100%{transform:rotate(360deg)}}body{animation-name:roll;animation-duration:4s;animation-iteration-count:1}
+    </style>
+{% endif %}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 my-2 text-center">
+            {% if filtered == false %}
+                <h1 class="my-3">Vos Sites Web</h1>
+            {% else %}
+                <h1 class="my-3">Résultat de Recherche</h1>
+            {% endif %}
+            {% if message is not null %}
+                <label>{{ message }}</label>
+            {% endif %}
+            {% if error is not null %}
+                <label class="labelError">{{ error }}</label>
+            {% endif %}
+        </div>
+        {% if websites is not empty and websites is not null %}
+            <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-6">
+                <div class="accordion" id="websites">
+                    {% for website in websites %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="accordion-label{{ website.id }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion{{ website.id }}" aria-expanded="false" aria-controls="accordion{{ website.id }}">
+                                    {{ website.name }}
+                                </button>
+                            </h2>
+                            <div id="accordion{{ website.id }}" class="accordion-collapse collapse" aria-labelledby="accordion-label{{ website.id }}" data-bs-parent="#websites">
+                                <div class="accordion-body">
+                                    <h4 class="my-3"><strong>Site {{ website.name }}</strong></h4>
+                                    <p>Lien : <a class="link" href="{{ website.link }}" target="_blank">{{ website.name }}</a></p>
+                                    <p>Client : <a type="button" class="link" data-bs-toggle="modal" data-bs-target="#modal{{ website.id }}">{{ website.client.companyName }}</a></p>
+                                    <p>Version PHP : 
+                                        {% if website.php is not null %}
+                                            <span class="soft">{{ website.php }}</span>
+                                        {% else %}
+                                            <span class="soft">Aucune</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {# Modal #}
+                        <div class="modal fade" id="modal{{ website.id }}" tabindex="-1" aria-labelledby="modal-label{{ website.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modal-label{{ website.id }}">Client {{ website.client.companyName }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Contact : <span class="soft">{{ website.client.contactName }}</span></p>
+                                        <p>Email : 
+                                            {% if website.client.contactEmail is not null %}
+                                                <span class="soft">{{ website.client.contactEmail }}</span>
+                                            {% else %}
+                                                <span class="soft">Aucun</span>
+                                            {% endif %}
+                                        </p>
+                                        <p>Téléphone : 
+                                            {% if website.client.contactPhone is not null %}
+                                                <span class="soft">{{ website.client.contactPhone }}</span>
+                                            {% else %}
+                                                <span class="soft">Aucun</span>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Merci</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12 text-center">
+                <h2 class="bigSadFace">:(</h2>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
